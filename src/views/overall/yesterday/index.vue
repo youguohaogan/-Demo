@@ -1,0 +1,130 @@
+<template>
+  <div>
+    <Header></Header>
+    <MemberContribution></MemberContribution>
+    <el-row :gutter="20">
+      <index-pie title="成交楼盘结构">
+        <template v-slot:rightTools>
+          <el-radio-group class="right-tools" v-model="buildingPieType">
+            <el-radio-button label="套数"></el-radio-button>
+            <el-radio-button label="金额"></el-radio-button>
+          </el-radio-group>
+        </template>
+      </index-pie>
+      <index-pie title="楼盘动销情况">
+        <template v-slot:rightTools>
+          <el-radio-group class="right-tools" v-model="salePieType">
+            <el-radio-button label="楼盘数"></el-radio-button>
+            <el-radio-button label="金额"></el-radio-button>
+          </el-radio-group>
+        </template>
+      </index-pie>
+      <index-pie title="成交来源结构">
+        <template v-slot:rightTools>
+          <el-radio-group class="right-tools" v-model="sourcePieType">
+            <el-radio-button label="套数"></el-radio-button>
+            <el-radio-button label="金额"></el-radio-button>
+          </el-radio-group>
+        </template>
+      </index-pie>
+    </el-row>
+    <div class="clear"></div>
+
+    <div class="table-container">
+      <h2>地区公司排名</h2>
+      <el-row :gutter="20">
+        <index-table title="成交排名" :showTypes="true"> </index-table>
+        <index-table title="推荐到访排名" />
+      </el-row>
+    </div>
+    <div class="table-container">
+      <h2>会员管理部排名</h2>
+      <el-row :gutter="20">
+        <index-table title="成交排名" :showTypes="true" />
+        <index-table title="推荐到访排名" />
+      </el-row>
+    </div>
+    <div class="table-container">
+      <h2>机构推荐到访排名</h2>
+      <el-row :gutter="20">
+        <index-table title="成交排名" :showTypes="true" />
+        <index-table title="到访排名" />
+      </el-row>
+    </div>
+    <div class="table-container">
+      <h2>机构30天排名</h2>
+      <el-row :gutter="20">
+        <index-table title="店效排名" :showTypes="true" />
+        <index-table title="人效排名" />
+      </el-row>
+    </div>
+  </div>
+</template>
+
+<script>
+import { Row, RadioGroup, RadioButton } from 'element-ui'
+export default {
+  components: {
+    Header: () => import('./components/header.vue'),
+    // ContriTable: () => import('./components/contri-table.vue'),
+    MemberContribution: () => import('./components/member-contribution.vue'),
+    IndexPie: () => import('../today/components/index-pie.vue'),
+    IndexTable: () => import('../today/components/index-table.vue'),
+
+    'el-row': Row,
+    // 'el-col': Col
+    'el-radio-group': RadioGroup,
+    'el-radio-button': RadioButton
+  },
+  data() {
+    return {
+      personColumns: [
+        { label: '会员类型', prop: 'vipType' },
+        { label: '推荐到访', prop: 'recommend' },
+        { label: '成交', prop: 'deal' }
+      ],
+      personData: [
+        { vipType: '员工', recommend: '99950', deal: '1000' },
+        { vipType: '员工', recommend: '99950', deal: '1000' },
+        { vipType: '员工', recommend: '99950', deal: '1000' }
+      ],
+      salePieType: '楼盘数',
+      sourcePieType: '套数',
+      buildingPieType: '套数'
+    }
+  }
+}
+</script>
+<style lang="less" scoped>
+.right-tools {
+  position: absolute;
+  right: 15px;
+  top: 5px;
+  border-radius: 4px;
+}
+
+.table-container {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  margin-top: 20px;
+  h2 {
+    font-size: 20px;
+    color: #303133;
+    font-weight: 600;
+  }
+  .el-row .el-col:first-child {
+    position: relative;
+    &:first-child::before {
+      content: '';
+      position: absolute;
+      background-color: #d9d9d9;
+      width: 1px;
+      top: 12px;
+      right: 0;
+      bottom: 0;
+      z-index: 10;
+    }
+  }
+}
+</style>
